@@ -3,17 +3,16 @@ const http  = require('http');
 const express = require('express');
 
 const app = express();
-app.use('/', (req, res, next) =>{{
-    console.log('this always runs!');
-    next();
-}});
+app.use(bodyParser.urlencode({extended: false}));
 app.use('/add-product', (req, res, next) =>{
-    console.log('in another middleware');
-    res.send('<h1>the "add product" page </h1>');
+    res.send('<form action="/product" method="POST><input type="text" name="title"><button type="submit"></form>');
 
 });
+app.use('/product', (req, res, next) => {
+    console.log(req.body);
+    res.redirect('/');
+});
 app.use('/', (req, res, next) => {
-    console.log('in another middleware');
     res.send('<h1> Hello from express</h1>');
 });
 
